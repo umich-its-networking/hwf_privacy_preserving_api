@@ -1,2 +1,4 @@
 ipython==6.2.1
 pandas==0.22.0
+flask
+flask-swagger
