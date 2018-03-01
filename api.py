@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, request
 from flask_restful import Resource, Api
 from flask_restful_swagger import swagger
 
@@ -20,7 +20,7 @@ class Count(Resource):
         self._data = Preserve(pandas.read_csv(csv_file))
 
     @swagger.operation(
-        dataType="number",
+        dataType="object",
         parameters=[
             {
               "name": "query",
@@ -32,9 +32,16 @@ class Count(Resource):
             }
           ],
         )
-    def get(self, query):
-        count = self._data.count(query)
-        return count
+    def get(self):
+        return {
+            'count': self._data.count(request.args.get('query')),
+        }
+
+    @swagger.operation(
+        dataType="object",
+        )
+    def options(self):
+        return self._data.attributes()
 
 
 api.add_resource(Count, '/student/count/',
