@@ -1,5 +1,6 @@
 from flask import Flask, request, g
-from privacy_preserving import PreserveCsv
+import pandas
+from privacy_preserving import Preserve
 
 app = Flask(__name__)
 
@@ -14,5 +15,5 @@ def count():
     return str(count)
 
 with app.app_context():
-    g.private_source = PreserveCsv('./public_data/student-por.csv')
+    g.private_source = Preserve(pandas.read_csv('./public_data/student-por.csv'))
     app.run()
