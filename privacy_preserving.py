@@ -1,18 +1,32 @@
-import pandas as pd
+import numpy as np
+from zlib import crc32
 
 
 class Preserve(object):
+    def __init__(self, dataframe, jitter=2):
+        self._jitter = jitter
+        self._data = dataframe
 
-    _df = None
+    def _protect(self, val, query):
+        np.random.seed(crc32(query.encode()))
 
-    def __init__(self):
-        pass
+        if val <= self._jitter:
+            jitter_range = (0, (self._jitter * 2) + 1)
+        else:
+            jitter_range = (val - self._jitter, val + self._jitter + 1)
 
+        protected_val = np.random.randint(*jitter_range)
 
-class PreserveCsv(Preserve):
+        return protected_val
 
-    def __init__(self, csv_file_path, **kw_args):
-        self._df = pd.read_csv(csv_file_path, **kw_args)
+    def attributes(self):
+        return dict(zip(
+            self._data.columns,
+            list(map(str, list(self._data.dtypes)))
+        ))
 
     def count(self, query):
-        return len(self._df.query(query))
+        return self._protect(
+            len(self._data.query(query)),
+            query
+        )

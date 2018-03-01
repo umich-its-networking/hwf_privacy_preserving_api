@@ -4,6 +4,9 @@ from flask_restful_swagger import swagger
 
 from privacy_preserving import PreserveCsv
 
+import pandas
+from privacy_preserving import Preserve
+
 app = Flask(__name__)
 api = swagger.docs(Api(app), apiVersion='0.1')
 
@@ -27,6 +30,8 @@ class Count(Resource):
 
 api.add_resource(Count, '/count/<string:query>')
 
+
 with app.app_context():
-    g.private_source = PreserveCsv('./public_data/student-por.csv')
+    g.private_source = Preserve(
+        pandas.read_csv('./public_data/student-por.csv'))
     app.run()
