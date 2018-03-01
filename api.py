@@ -13,6 +13,7 @@ def home():
     return redirect("/spec.html")
 
 class Count(Resource):
+
     @swagger.operation(
         dataType="number",
         parameters=[
@@ -30,6 +31,8 @@ class Count(Resource):
         source = Preserve(pandas.read_csv('./public_data/student-por.csv'))
         count = source.count(query)
         return count
+
+Count.get.__swagger_attr['parameters'][0]['description'] += 'TEST TEST TEST'
 
 api.add_resource(Count, '/count/<string:query>')
 
