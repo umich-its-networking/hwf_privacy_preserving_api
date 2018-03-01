@@ -3,17 +3,17 @@ from zlib import crc32
 
 
 class Preserve(object):
-    def __init__(self, dataframe):
+    def __init__(self, dataframe, jitter=2):
+        self._jitter = jitter
         self._data = dataframe
 
     def _protect(self, val, query):
-        jitter = 2
         np.random.seed(crc32(query.encode()))
 
-        if val <= jitter:
-            jitter_range = (0, (jitter * 2) + 1)
+        if val <= self._jitter:
+            jitter_range = (0, (self._jitter * 2) + 1)
         else:
-            jitter_range = (val - jitter, val + jitter + 1)
+            jitter_range = (val - self._jitter, val + self._jitter + 1)
 
         protected_val = np.random.randint(*jitter_range)
 
