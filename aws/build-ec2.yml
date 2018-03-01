@@ -1,0 +1,87 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    VPC_NAME: "umvpn-east-1"
+    SUBNET_NAME: "umvpn-east-1a"
+    ec2_keypair_name: "dnowell-ca"
+    SECURITYGROUP: "HWFprivacy"
+    inst_type: "t2.small"
+    ec2_name: "HWF Privacy API"
+    Owner: "dnowell"
+
+  tasks:
+  - name: Find ID of AMI
+    ec2_ami_find:
+      owner: "099720109477"
+      name: "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
+#      name: "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180126"
+    register: amidata
+
+
+  - name: Pull VPC ID
+    ec2_vpc_net_facts:
+      filters:
+        "tag:Name": "{{ VPC_NAME }}"
+    register: vpcdata
+
+
+  - name: Pull Subnet ID
+    ec2_vpc_subnet_facts:
+      filters:
+        vpc-id: "{{ vpcdata.vpcs[0].id }}"
+        "tag:Name": "{{ SUBNET_NAME }}"
+    register: sndata
+
+  - name: Launch instance
+    ec2:
+      key_name: "{{ ec2_keypair_name }}"
+      group: "{{ SECURITYGROUP }}"
+      instance_type: "{{ inst_type }}"
+      image: "{{ amidata.results[0].ami_id }}"
+      vpc_subnet_id: "{{ sndata.subnets[0].id }}"
+      termination_protection: "{{ termination_protection | default('yes') }}"
+      wait: true
+      exact_count: 1
+      count_tag:
+        Name: "{{ ec2_name }}"
+      instance_tags:
+        Name: "{{ ec2_name }}"
+        Owner: "{{ Owner }}"
+      volumes:
+        - device_name: "/dev/sda1"
+          volume_size: "20"
+          delete_on_termination: true
+    register: f_ec2
+
+
+  - name: Get EBS Volume ID
+    ec2_vol:
+      instance: "{{ f_ec2.tagged_instances[0].id }}"
+      device_name: /dev/sda1
+    register: ebs_disk1
+
+  - name: Tag EBS Volume
+    ec2_tag:
+      resource: "{{ ebs_disk1.volume_id }}"
+      tags:
+        Name: "{{ ec2_name }}"
+        Owner: "{{ Owner }}"
+        Notes: "Boot Disk"
+
+
+  - name: Get public IP of new instance
+    set_fact:
+      f_ip_addr: "{{ f_ec2.tagged_instances[0].public_ip }}"
+
+  - name: Display public IP for next step
+    debug:
+      msg: "{{ f_ip_addr }}"
+
+  - name: Write IP to file
+    local_action: 
+      copy content="{{ f_ip_addr }}"
+      dest="/tmp/aws_public_ip"
+
