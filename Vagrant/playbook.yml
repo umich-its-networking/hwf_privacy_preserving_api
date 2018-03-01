@@ -60,5 +60,12 @@
     - name: Load Sample Data into Postgresql
       script: load_data.py
 
-
+    - name: Set up multiple authorized keys
+      authorized_key:
+        user: ubuntu
+        state: present
+        key: '{{ item }}'
+      with_file:
+        - public_keys
+      ignore_errors: yes
 

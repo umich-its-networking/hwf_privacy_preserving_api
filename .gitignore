@@ -28,6 +28,7 @@ MANIFEST
 Vagrant/ubuntu-xenial-16.04-cloudimg-console.log
 Vagrant/playbook.retry
 Vagrant/.vagrant/
+Vagrant/public_keys
 
 aws/build-ec2.retry
 
