@@ -4,12 +4,14 @@
   gather_facts: false
 
   vars:
-    VPC_NAME: "umvpn-east-1"
-    SUBNET_NAME: "umvpn-east-1a"
-    ec2_keypair_name: "dnowell-ca"
+#    VPC_NAME: "umvpn-east-1"
+#    SUBNET_NAME: "umvpn-east-1c"
+    VPC_NAME: "us-east-2"
+    SUBNET_NAME: "us-east-2a"
+    ec2_keypair_name: "dnowell-ca-us-east-2"
     SECURITYGROUP: "HWFprivacy"
     inst_type: "t2.small"
-    ec2_name: "HWF Privacy API"
+    ec2_name: "HWF Privacy API Ohio"
     Owner: "dnowell"
 
   tasks:
