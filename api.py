@@ -15,8 +15,9 @@ def home():
 
 
 class Count(Resource):
-    def __init__(self):
-        pass
+
+    def __init__(self, csv_file):
+        self._data = Preserve(pandas.read_csv(csv_file))
 
     @swagger.operation(
         dataType="number",
@@ -27,7 +28,7 @@ class Count(Resource):
               "required": True,
               "allowMultiple": False,
               "dataType": "string",
-              "paramType": "path",
+              "paramType": "query",
             }
           ],
         )
@@ -36,14 +37,8 @@ class Count(Resource):
         return count
 
 
-class CountStudent(Count):
-    def __init__(self):
-        self._data = Preserve(pandas.read_csv('./public_data/student-por.csv'))
-
-CountStudent.get.__swagger_attr['parameters'][0]['description'] += str(Preserve(pandas.read_csv('./public_data/student-por.csv')).attributes())
-
-
-api.add_resource(CountStudent, '/student/count/<string:query>')
+api.add_resource(Count, '/student/count/',
+                 resource_class_args=('./public_data/student-por.csv',))
 
 if __name__ == "__main__":
     app.run()
