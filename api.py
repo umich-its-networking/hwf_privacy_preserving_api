@@ -35,13 +35,12 @@ class Count(Resource):
         count = self._data.count(query)
         return count
 
-Count.get.__swagger_attr['parameters'][0]['description'] += 'TEST TEST TEST'
-
-api.add_resource(Count, '/count/<string:query>')
 
 class CountStudent(Count):
     def __init__(self):
         self._data = Preserve(pandas.read_csv('./public_data/student-por.csv'))
+
+CountStudent.get.__swagger_attr['parameters'][0]['description'] += str(Preserve(pandas.read_csv('./public_data/student-por.csv')).attributes())
 
 
 api.add_resource(CountStudent, '/student/count/<string:query>')
