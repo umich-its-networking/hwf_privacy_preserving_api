@@ -19,6 +19,13 @@
         name: pip
         extra_args: --upgrade
 
+    - name: Copy python source code
+      copy:
+        src: "{{ item }}"
+        dest: "/opt/"
+      with_items:
+        - "../privacy_preserving.py"
+        - "../api.py"
 
     - name: Copy requirements.txt 
       copy:
@@ -28,7 +35,7 @@
     - name: Copy data files
       copy:
         src: "../public_data"
-        dest: "/tmp"
+        dest: "/opt"
 
     - name: Pip Install modules
       pip:
