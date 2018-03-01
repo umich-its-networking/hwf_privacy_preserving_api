@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install Packages
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+      with_items:
+        - "software-properties-common"
+        - "python3-pip"
+
+    - name: Copy requirements.txt 
+      copy:
+        src: "requirements.txt"
+        dest: "/tmp/requirements.txt"
+
+# Clean this up to use requirements.txt instead of hardcoding
+    - name: Pip Install modules
+      pip:
+        requirements: "/tmp/requirements.txt"
+        state: latest
