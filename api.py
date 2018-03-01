@@ -27,13 +27,12 @@ class Count(Resource):
           ],
         )
     def get(self, query):
-        count = g.private_source.count(query)
+        source = Preserve(pandas.read_csv('./public_data/student-por.csv'))
+        count = source.count(query)
         return count
 
 api.add_resource(Count, '/count/<string:query>')
 
 
-with app.app_context():
-    g.private_source = Preserve(
-        pandas.read_csv('./public_data/student-por.csv'))
+if __name__ == "__main__":
     app.run()
