@@ -29,6 +29,8 @@ Vagrant/ubuntu-xenial-16.04-cloudimg-console.log
 Vagrant/playbook.retry
 Vagrant/.vagrant/
 
+aws/build-ec2.retry
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
