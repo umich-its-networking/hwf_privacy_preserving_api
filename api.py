@@ -1,14 +1,16 @@
-from flask import Flask, request, g
+from flask import Flask, request, g, redirect
 from flask_restful import Resource, Api
 from flask_restful_swagger import swagger
-
-from privacy_preserving import PreserveCsv
 
 import pandas
 from privacy_preserving import Preserve
 
 app = Flask(__name__)
-api = swagger.docs(Api(app), apiVersion='0.1')
+api = swagger.docs(Api(app), apiVersion='0.1', api_spec_url='/spec')
+
+@app.route('/')
+def home():
+    return redirect("/spec.html")
 
 class Count(Resource):
     @swagger.operation(
