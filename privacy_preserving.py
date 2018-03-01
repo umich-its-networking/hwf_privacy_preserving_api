@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 from zlib import crc32
 
@@ -31,9 +30,3 @@ class Preserve(object):
             len(self._data.query(query)),
             query
         )
-
-
-class PreserveCsv(Preserve):
-
-    def __init__(self, *args, **kw_args):
-        return pd.read_csv(*args, **kw_args)
