@@ -2,8 +2,6 @@ from flask import Flask, request, g
 from flask_restful import Resource, Api
 from flask_restful_swagger import swagger
 
-from privacy_preserving import PreserveCsv
-
 import pandas
 from privacy_preserving import Preserve
 
