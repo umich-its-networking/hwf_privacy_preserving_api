@@ -11,5 +11,9 @@ pip install -r requirements.txt
 ## Running
 
 ```
-FLASK_APP=api.py flask run
+export FLASK_APP=api.py
+flask run
 ```
+
+Once `FLASK_APP` is defined in a shell session, the `export` step
+may be skipped for subsequent runs.
