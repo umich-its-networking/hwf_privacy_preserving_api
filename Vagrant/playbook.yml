@@ -10,13 +10,55 @@
       with_items:
         - "software-properties-common"
         - "python3-pip"
+        - "postgresql"
+        - "postgresql-contrib"
+
+
+    - name: Upgrade pip
+      pip:
+        name: pip
+        extra_args: --upgrade
+
 
     - name: Copy requirements.txt 
       copy:
         src: "../requirements.txt"
         dest: "/tmp/requirements.txt"
 
+    - name: Copy data files
+      copy:
+        src: "../public_data"
+        dest: "/tmp"
+
     - name: Pip Install modules
       pip:
         requirements: "/tmp/requirements.txt"
         state: latest
+
+
+    - name: Ensure the PostgreSQL service is running
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Ensure database is created
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: "public_data"
+
+    - name: Ensure user has access to the database
+      become: true
+      become_user: postgres
+      postgresql_user:
+        db: "public_data"
+        name: "pd_user"
+        password: "MonkeysAreCool"
+        priv: ALL
+
+    - name: Load Sample Data into Postgresql
+      script: load_data.py
+
+
+
