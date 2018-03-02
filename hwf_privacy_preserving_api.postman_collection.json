@@ -1,0 +1,67 @@
+{
+	"info": {
+		"name": "hwf_privacy_preserving_api",
+		"_postman_id": "0c54bd69-b3a2-4a78-bacc-19c324000c7f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Example query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://hwf-privacy-api.dsc.umich.edu/student/count/?query=age==16",
+					"protocol": "http",
+					"host": [
+						"hwf-privacy-api",
+						"dsc",
+						"umich",
+						"edu"
+					],
+					"path": [
+						"student",
+						"count",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "age==16",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Column names",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://hwf-privacy-api.dsc.umich.edu/student/count/",
+					"protocol": "http",
+					"host": [
+						"hwf-privacy-api",
+						"dsc",
+						"umich",
+						"edu"
+					],
+					"path": [
+						"student",
+						"count",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
