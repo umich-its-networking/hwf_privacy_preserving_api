@@ -36,3 +36,13 @@ cd aws
 run-ansible.sh
 ```
 Set up your variables in run-ansible.sh and build-ec2.yml first, but this will create and configure an EC2 instance
+
+## Postman
+
+The API can be tested and experiments can be run on it using
+[Postman](https://www.getpostman.com).  
+
+Start Postman and import the
+`hwf_privacy_preserving_api.postman_collection.json` collection file from
+this repo.  The collection includes queries for the API's two entry points,
+one for the `GET` method and one for `OPTIONS`.
