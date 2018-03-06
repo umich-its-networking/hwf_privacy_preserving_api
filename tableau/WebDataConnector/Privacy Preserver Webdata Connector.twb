@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 10500.18.0210.2209                               -->
+<workbook original-version='10.5' source-build='10.5.1 (10500.18.0210.2209)' source-platform='mac' version='10.5' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='Privacy Preserving API' inline='true' name='federated.1sz6wjz1hn6tta1ectdaq15tokhx' version='10.5'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='Privacy Preserving API' name='webdata-direct.1y9njfl1xclscw1fcan8x0rp91cd'>
+            <connection APIVersion='' authType='none' authentication='no' channel='http' class='webdata-direct' connectionName='Privacy Preserving API' filename='PrivacyPreservingAPI.html' increment-key='' path='/Examples/html/' port='8888' scriptVersion='' secondary_whitelist='' server='localhost' urlQuery='' username='' usernameAlias='' />
+          </named-connection>
+        </named-connections>
+        <relation connection='webdata-direct.1y9njfl1xclscw1fcan8x0rp91cd' name='Privacy preserving api data' table='[PrivacyPreservingApi]' type='table' />
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>count</remote-name>
+            <remote-type>-1</remote-type>
+            <local-name>[count]</local-name>
+            <parent-name>[Privacy preserving api data]</parent-name>
+            <remote-alias />
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='RemoteTypeName'>&quot;string&quot;</attribute>
+              <attribute datatype='boolean' name='filterable_column'>false</attribute>
+            </attributes>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Measure Names' datatype='string' name='[:Measure Names]' role='dimension' type='nominal' />
+      <column caption='Measure Values' datatype='real' name='[Multiple Values]' role='measure' type='quantitative' />
+      <column caption='Number of Records' datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Count' datatype='real' datatype-customized='true' name='[count]' role='measure' type='quantitative' />
+      <extract count='-1' enabled='true' units='records'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='/Users/stanyon/Documents/My Tableau Repository/Datasources/federated.1sz6wjz1hn6tta1ectdaq15tokhx_14v10rd1d0kvwx192b9nt1kqabg1.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='03/02/2018 10:44:51 PM' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <refresh>
+            <refresh-event add-from-file-path='' increment-value='%null%' refresh-type='create' rows-inserted='1' timestamp-start='2018-03-02 22:44:51.540' />
+          </refresh>
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>count</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[count]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>count</remote-alias>
+              <ordinal>0</ordinal>
+              <family>Privacy preserving api data</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LROOT' />
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' dim-percentage='0.501437' measure-ordering='alphabetic' measure-percentage='0.498563' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Privacy Preserving Data Output'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Privacy Preserving API' name='federated.1sz6wjz1hn6tta1ectdaq15tokhx' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1sz6wjz1hn6tta1ectdaq15tokhx'>
+            <column caption='Count' datatype='real' datatype-customized='true' name='[count]' role='measure' type='quantitative' />
+            <column-instance column='[count]' derivation='Sum' name='[sum:count:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols>[federated.1sz6wjz1hn6tta1ectdaq15tokhx].[sum:count:qk]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='Privacy Preserving Data Output'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.1sz6wjz1hn6tta1ectdaq15tokhx].[none:count:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='158' name='Privacy Preserving Data Output' width='384'>
+      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
+      /+CYKNHQmlwWAAAAAElFTkSuQmCC
+    </thumbnail>
+  </thumbnails>
+</workbook>
